@@ -1,0 +1,23 @@
+# This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+name: farmatica
+services:
+  postgresql:
+    extends:
+      file: ./postgresql.yml
+      service: postgresql
+  elasticsearch:
+    extends:
+      file: ./elasticsearch.yml
+      service: elasticsearch
+  jhipster-registry:
+    extends:
+      file: ./jhipster-registry.yml
+      service: jhipster-registry
+  kafka:
+    extends:
+      file: ./kafka.yml
+      service: kafka
+  zookeeper:
+    extends:
+      file: ./kafka.yml
+      service: zookeeper

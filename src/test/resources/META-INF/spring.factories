@@ -1,0 +1,4 @@
+org.springframework.test.context.ContextCustomizerFactory=\
+com.kosasih.farmatica.config.KafkaTestContainersSpringContextCustomizerFactory,\
+com.kosasih.farmatica.config.SqlTestContainersSpringContextCustomizerFactory,\
+com.kosasih.farmatica.config.TestContainersSpringContextCustomizerFactory

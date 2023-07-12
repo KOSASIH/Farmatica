@@ -1,3 +1,5 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/KOSASIH/Farmatica/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/KOSASIH/Farmatica/tree/main)
+
 # Farmatica - Intelligent Agricultural System
 
 Farmatica is an advanced agricultural system powered by state-of-the-art AI (Artificial Intelligence) and ML (Machine Learning) technologies. It is designed to revolutionize farming practices and enhance agricultural productivity through data-driven insights and automation.

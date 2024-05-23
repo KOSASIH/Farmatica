@@ -1,0 +1,56 @@
+jobs:
+  - job: Test
+    pool:
+      vmImage: 'ubuntu-20.04'
+    variables:
+      NODE_VERSION: 18.16.1
+      SPRING_OUTPUT_ANSI_ENABLED: NEVER
+      SPRING_JPA_SHOW_SQL: false
+      JHI_DISABLE_WEBPACK_LOGS: true
+      NG_CLI_ANALYTICS: 'false'
+      JHI_E2E_HEADLESS: true
+
+    steps:
+      #----------------------------------------------------------------------
+      # Install all tools and check configuration
+      #----------------------------------------------------------------------
+      - task: NodeTool@0
+        inputs:
+          versionSpec: $(NODE_VERSION)
+        displayName: 'TOOLS: install Node.js'
+      #----------------------------------------------------------------------
+      # Tests
+      #----------------------------------------------------------------------
+      - task: Npm@1
+        inputs:
+          command: 'install'
+        displayName: 'INSTALL: launch npm install'
+      - script: chmod +x mvnw
+      - task: Npm@1
+        inputs:
+          command: 'custom'
+          customCommand: ' run ci:backend:test'
+        displayName: 'TESTS: backend'
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '**/TEST-*.xml'
+          searchFolder: '$(Build.SourcesDirectory)/target/test-results'
+        condition: succeededOrFailed()
+        displayName: 'TESTS: publish test results'
+      - task: Npm@1
+        inputs:
+          command: 'custom'
+          customCommand: ' run ci:frontend:test'
+        displayName: 'TESTS: frontend'
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '$(Build.SourcesDirectory)/target/test-results/TESTS-results-jest.xml'
+        condition: succeededOrFailed()
+        displayName: 'TESTS: publish test results'
+      - task: Npm@1
+        inputs:
+          command: 'custom'
+          customCommand: ' run java:jar:prod'
+        displayName: 'TESTS: packaging'
